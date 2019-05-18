@@ -1,6 +1,6 @@
 # "East Bay Travel"
 
-![version](https://img.shields.io/github/package-json/v/trewaters/eastbaytravel.svg)
+![version](https://img.shields.io/github/package-json/v/trewaters/EastBayTravel.svg)
 
 An app that I use to get around San Francisco Bay Area. Starting with BART schedule. Eventually include other area public transit to the app.
 
