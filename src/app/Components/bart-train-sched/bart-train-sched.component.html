@@ -1,0 +1,110 @@
+<i class="fas fa-subway"></i>
+<label for="YAH">You are Here:</label>
+<input
+  id="YAH"
+  list="YAHstations"
+  (keyup)="bindYah($event)"
+  class="w3-select w3-border"
+/>
+
+<datalist id="YAHstations">
+  <option *ngFor="let station of vStations" value="{{ station }}">{{
+    station
+  }}</option>
+</datalist>
+<br>
+<br>
+<i class="fas fa-road"></i>
+<label for="Destination">Destination Station:</label>
+<input
+  id="Destination"
+  list="DESTstations"
+  (keyup)="bindDes($event)"
+  class="w3-select w3-border"
+/>
+<datalist id="DESTstations">
+  <option *ngFor="let station of vStations" value="{{ station }}">{{
+    station
+  }}</option>
+</datalist>
+
+<br />
+
+<p><button class="w3-button w3-block w3-khaki">Nearest Station</button></p>
+<p>
+  <button (click)="departTimeYah()" class="w3-button w3-block w3-green">
+    Next Train
+  </button>
+</p>
+<p>
+  <button
+    *ngIf="desStation && yahStation"
+    (click)="getSchedule()"
+    class="w3-button w3-block w3-blue"
+  >
+    Display Route
+  </button>
+</p>
+
+<div class="w3-container" *ngIf="vDepartureTime.root">
+  <h2>Departing Train Information</h2>
+  <h3>
+    <em>{{ vDepartureTime.root.station[0].name }} station</em>
+  </h3>
+
+  <ul>
+    <li *ngFor="let destination of vDepartureTime.root.station[0].etd">
+      <em class="w3-large">{{ destination.destination | uppercase }}</em>
+      <br />leaving in {{ destination.estimate[0].minutes }} minutes, <br />{{
+        destination.estimate[0].length
+      }}
+      cars long, <br />
+      <em *ngIf="destination.estimate[0].delay > 0"
+        >Delayed by {{ destination.estimate[0].delay }} minutes</em
+      >
+    </li>
+  </ul>
+  <br />
+  <!-- <em>{{ vMessage }}</em> -->
+  <br />
+  <em>BART MESSAGE:{{ vDepartureTime.root.message }}</em>
+  <br />
+</div>
+
+<div class="" *ngIf="vGetSchedule.schedule">
+
+</div>
+  <!-- TRIPLEG: {{ vGetSchedule.schedule.request.trip[0].leg[0] | json }} -->
+
+  <div class="w3-container w3-border" *ngIf="vGetSchedule.schedule">
+      {{ vGetSchedule.schedule?.date }} ( {{ vGetSchedule.schedule?.time }} )
+      <br />
+    <p
+      class="w3-text-orange"
+      *ngFor="let leg of vGetSchedule.schedule.request.trip[0].leg"
+    >
+
+
+      <em>Catch {{ leg["@trainHeadStation"] }} train <br><br>
+        leaving from {{ leg["@origin"] }} station</em>
+      <br />
+      <em>at {{ leg["@origTimeMin"] }}</em
+        ><br /><br>
+      <em>Arriving at {{ leg["@destination"] }} station</em
+      ><br />
+
+      <em>Around {{ leg["@destTimeMin"] }}</em
+      >
+    </p>
+  </div>
+
+  <br />
+  <br />
+
+
+<img
+  src="../assets/images/BART-system-map-weekday.png"
+  width="90%"
+  alt="BART Station Map"
+/>
+<!-- <button (click)="navigateTo('/')">navigateTo</button> -->
